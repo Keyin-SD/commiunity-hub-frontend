@@ -1,0 +1,175 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #1f2328;
+  background: #f6f7f9;
+}
+
+a {
+  color: #2458d6;
+}
+
+.site-header {
+  padding: 1rem;
+  background: #fff;
+  border-bottom: 1px solid #e3e5e8;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header a:first-child {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.button,
+button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #2458d6;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.event-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.event-form fieldset {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid #e3e5e8;
+  border-radius: 8px;
+}
+
+.event-form legend {
+  font-weight: 600;
+  padding: 0 0.25rem;
+}
+
+.event-form label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.event-form input,
+.event-form textarea {
+  padding: 0.5rem;
+  border: 1px solid #c9ced4;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.detail-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-form small {
+  font-weight: 400;
+  color: #59636e;
+}
+
+.event-form button {
+  justify-self: start;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card,
+.detail {
+  background: #fff;
+  border: 1px solid #e3e5e8;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.card h2 {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.125rem;
+}
+
+.meta {
+  margin: 0;
+  color: #59636e;
+}
+
+.price {
+  margin: 0.5rem 0 0;
+  font-weight: 600;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: #e8eefc;
+  color: #2458d6;
+  font-size: 0.8rem;
+}
+
+.detail .tag {
+  margin-top: 1rem;
+}
+
+.detail dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+}
+
+.detail dt {
+  font-weight: 600;
+}
+
+.detail dd {
+  margin: 0;
+}
+
+.contact {
+  padding-left: 1.25rem;
+}
+
+.error {
+  color: #c62828;
+}
