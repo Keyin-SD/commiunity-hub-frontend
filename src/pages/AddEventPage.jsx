@@ -7,12 +7,12 @@ function AddEventPage() {
 
   async function handleSubmit(payload) {
     await createResource(payload)
-    navigate('/')
+    navigate('/events')
   }
 
   return (
     <section className="detail">
-      <Link to="/">← Back to events</Link>
+      <Link to="/events">← Back to events</Link>
       <h1>Add an Event</h1>
       <EventForm submitLabel="Add event" onSubmit={handleSubmit} />
     </section>

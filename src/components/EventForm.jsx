@@ -6,7 +6,9 @@ const EMPTY_FORM = {
   resourceDescription: '',
   resourceCategory: '',
   resourceTime: '',
-  resourceLocation: '',
+  locationName: '',
+  locationAddress: '',
+  locationCity: '',
   resourcePrice: '',
   contactName: '',
   contactEmail: '',
@@ -14,7 +16,6 @@ const EMPTY_FORM = {
   contactWebsiteUrl: '',
 }
 
-// datetime-local wants "YYYY-MM-DDTHH:mm" in local time.
 function toLocalInput(isoTime) {
   const date = new Date(isoTime)
   const offsetMs = date.getTimezoneOffset() * 60_000
@@ -22,22 +23,39 @@ function toLocalInput(isoTime) {
 }
 
 function toFormValues(event) {
-  const values = { ...EMPTY_FORM }
-  if (!event) return values
-  for (const key of Object.keys(EMPTY_FORM)) {
-    values[key] = event[key] ?? ''
+  if (!event) return { ...EMPTY_FORM }
+  return {
+    resourceTitle: event.resourceTitle ?? '',
+    resourceDescription: event.resourceDescription ?? '',
+    resourceCategory: event.resourceCategory ?? '',
+    resourceTime: isIsoTime(event.resourceTime) ? toLocalInput(event.resourceTime) : '',
+    locationName: event.location?.locationName ?? event.resourceLocation ?? '',
+    locationAddress: event.location?.locationAddress ?? '',
+    locationCity: event.location?.locationCity ?? '',
+    resourcePrice: event.resourcePrice ?? '',
+    contactName: event.contactName ?? '',
+    contactEmail: event.contactEmail ?? '',
+    contactPhone: event.contactPhone ?? '',
+    contactWebsiteUrl: event.contactWebsiteUrl ?? '',
   }
-  // Free-text times ("10am-6pm") can't go in a date picker, so start blank and keep the original unless replaced.
-  values.resourceTime = isIsoTime(event.resourceTime) ? toLocalInput(event.resourceTime) : ''
-  return values
 }
 
 function toPayload(form, legacyTime) {
   return {
-    ...form,
-    // datetime-local gives local time without a zone; send ISO so it matches existing events.
+    resourceTitle: form.resourceTitle,
+    resourceDescription: form.resourceDescription,
+    resourceCategory: form.resourceCategory,
     resourceTime: form.resourceTime ? new Date(form.resourceTime).toISOString() : (legacyTime ?? ''),
     resourcePrice: form.resourcePrice === '' ? 0 : Number(form.resourcePrice),
+    contactName: form.contactName,
+    contactEmail: form.contactEmail,
+    contactPhone: form.contactPhone,
+    contactWebsiteUrl: form.contactWebsiteUrl,
+    location: {
+      locationName: form.locationName,
+      locationAddress: form.locationAddress,
+      locationCity: form.locationCity,
+    },
   }
 }
 
@@ -87,15 +105,27 @@ function EventForm({ initialEvent, submitLabel, onSubmit }) {
             onChange={handleChange}
             required={!legacyTime}
           />
-          {legacyTime && <small>Currently “{legacyTime}”. Leave blank to keep it.</small>}
-        </label>
-        <label>
-          Location
-          <input name="resourceLocation" value={form.resourceLocation} onChange={handleChange} required />
+          {legacyTime && <small>Currently "{legacyTime}". Leave blank to keep it.</small>}
         </label>
         <label>
           Price (leave blank if free)
           <input type="number" name="resourcePrice" value={form.resourcePrice} onChange={handleChange} min="0" step="0.01" />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Location</legend>
+        <label>
+          Name
+          <input name="locationName" value={form.locationName} onChange={handleChange} required placeholder="e.g. Community Center" />
+        </label>
+        <label>
+          Address
+          <input name="locationAddress" value={form.locationAddress} onChange={handleChange} placeholder="e.g. 123 Main St" />
+        </label>
+        <label>
+          City
+          <input name="locationCity" value={form.locationCity} onChange={handleChange} placeholder="e.g. Springfield" />
         </label>
       </fieldset>
 

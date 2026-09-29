@@ -28,11 +28,27 @@ a {
   align-items: center;
 }
 
-.site-header a:first-child {
+.site-title {
   font-weight: 700;
   font-size: 1.25rem;
   color: inherit;
   text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #59636e;
+}
+
+.site-nav a.active:not(.button) {
+  color: #2458d6;
 }
 
 .button,
@@ -172,4 +188,57 @@ main {
 
 .error {
   color: #c62828;
+}
+
+.button-outline {
+  background: transparent;
+  color: #2458d6;
+  border: 2px solid #2458d6;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin: 0 0 0.75rem;
+}
+
+.hero > p {
+  max-width: 540px;
+  margin: 0 auto 1.5rem;
+  color: #59636e;
+  font-size: 1.05rem;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.feature-card {
+  background: #fff;
+  border: 1px solid #e3e5e8;
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.feature-card h3 {
+  margin: 0 0 0.25rem;
+}
+
+.feature-card p {
+  margin: 0;
+  color: #59636e;
 }

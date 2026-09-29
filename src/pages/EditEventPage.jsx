@@ -36,7 +36,7 @@ function EditEventPage() {
     return (
       <>
         <p className="error">Couldn't find that event.</p>
-        <Link to="/">← Back to events</Link>
+        <Link to="/events">← Back to events</Link>
       </>
     )
   }

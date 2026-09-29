@@ -30,7 +30,7 @@ function EventDetailPage() {
     return (
       <>
         <p className="error">Couldn't find that event.</p>
-        <Link to="/">← Back to events</Link>
+        <Link to="/events">← Back to events</Link>
       </>
     )
   }
@@ -38,7 +38,7 @@ function EventDetailPage() {
   return (
     <article className="detail">
       <div className="detail-actions">
-        <Link to="/">← Back to events</Link>
+        <Link to="/events">← Back to events</Link>
         <Link to={`/events/${eventId}/edit`} className="button">Edit</Link>
       </div>
       {event.resourceCategory && <span className="tag">{event.resourceCategory}</span>}
@@ -51,10 +51,14 @@ function EventDetailPage() {
             <dd>{formatTime(event.resourceTime)}</dd>
           </>
         )}
-        {event.resourceLocation && (
+        {(event.location || event.resourceLocation) && (
           <>
             <dt>Where</dt>
-            <dd>{event.resourceLocation}</dd>
+            <dd>
+              {event.location
+                ? [event.location.locationName, event.location.locationAddress, event.location.locationCity].filter(Boolean).join(', ')
+                : event.resourceLocation}
+            </dd>
           </>
         )}
         <dt>Price</dt>

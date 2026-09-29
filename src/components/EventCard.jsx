@@ -9,7 +9,7 @@ function EventCard({ event }) {
         <Link to={`/events/${event.resourceId}`}>{event.resourceTitle}</Link>
       </h2>
       <p className="meta">
-        {[formatTime(event.resourceTime), event.resourceLocation].filter(Boolean).join(' · ')}
+        {[formatTime(event.resourceTime), event.location?.locationName ?? event.resourceLocation].filter(Boolean).join(' · ')}
       </p>
       <p className="price">{formatPrice(event.resourcePrice)}</p>
     </article>
