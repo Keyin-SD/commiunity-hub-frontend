@@ -24,24 +24,42 @@ function CityDetailPage() {
     }
   }, [cityId])
 
-  if (status === 'loading') return <p>Loading city…</p>
+  if (status === 'loading') {
+    return (
+      <div className="detail">
+        <div className="skeleton skeleton-detail" style={{ width: '100%' }} />
+      </div>
+    )
+  }
+
   if (status === 'error') {
     return (
-      <>
+      <div className="detail">
         <p className="error">Couldn't find that city.</p>
-        <Link to="/events">← Back to events</Link>
-      </>
+        <Link to="/events" className="back-link">Back to events</Link>
+      </div>
     )
   }
 
   return (
     <article className="detail">
-      <Link to="/events">← Back to events</Link>
+      <Link to="/events" className="back-link">Back to events</Link>
       <h1>{city.cityName}</h1>
-      <p>City ID: {city.cityId}</p>
-      <p>Population: {city.population}</p>
-      <p>Province: {city.province}</p>
 
+      <div className="city-stats">
+        <div className="city-stat">
+          <p className="city-stat-label">City ID</p>
+          <p className="city-stat-value">{city.cityId}</p>
+        </div>
+        <div className="city-stat">
+          <p className="city-stat-label">Population</p>
+          <p className="city-stat-value">{city.population?.toLocaleString() ?? '—'}</p>
+        </div>
+        <div className="city-stat">
+          <p className="city-stat-label">Province</p>
+          <p className="city-stat-value">{city.province ?? '—'}</p>
+        </div>
+      </div>
     </article>
   )
 }
