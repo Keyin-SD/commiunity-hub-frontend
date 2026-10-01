@@ -31,19 +31,26 @@ function EditEventPage() {
     navigate(`/events/${eventId}`)
   }
 
-  if (status === 'loading') return <p>Loading event…</p>
+  if (status === 'loading') {
+    return (
+      <div className="detail">
+        <div className="skeleton skeleton-detail" style={{ width: '100%' }} />
+      </div>
+    )
+  }
+
   if (status === 'error') {
     return (
-      <>
+      <div className="detail">
         <p className="error">Couldn't find that event.</p>
-        <Link to="/events">← Back to events</Link>
-      </>
+        <Link to="/events" className="back-link">Back to events</Link>
+      </div>
     )
   }
 
   return (
     <section className="detail">
-      <Link to={`/events/${eventId}`}>← Back to event</Link>
+      <Link to={`/events/${eventId}`} className="back-link">Back to event</Link>
       <h1>Edit Event</h1>
       <EventForm key={eventId} initialEvent={event} submitLabel="Save changes" onSubmit={handleSubmit} />
     </section>

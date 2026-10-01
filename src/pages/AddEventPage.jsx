@@ -12,7 +12,7 @@ function AddEventPage() {
 
   return (
     <section className="detail">
-      <Link to="/events">← Back to events</Link>
+      <Link to="/events" className="back-link">Back to events</Link>
       <h1>Add an Event</h1>
       <EventForm submitLabel="Add event" onSubmit={handleSubmit} />
     </section>

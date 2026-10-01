@@ -4,12 +4,10 @@ function HomePage() {
   return (
     <section className="home">
       <div className="hero">
-        <h1>Welcome to Community Hub</h1>
+        <h1>Community Hub</h1>
         <p>
-          Your go-to place for discovering and sharing local events, meetups,
-          workshops, and resources in your community. Whether you're looking for
-          something to do this weekend or want to spread the word about your own
-          event — this is the spot.
+          Discover and share local events, meetups, workshops, and resources
+          in your community.
         </p>
         <div className="hero-actions">
           <Link to="/events" className="button">Browse events</Link>

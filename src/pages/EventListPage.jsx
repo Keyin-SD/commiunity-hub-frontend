@@ -91,7 +91,7 @@ function EventListPage() {
 
   return (
     <section>
-      <h1>Community Events</h1>
+      <h1>Events</h1>
 
       <form className="search-bar" onSubmit={handleSubmit}>
         <select value={field} onChange={handleFieldChange}>
@@ -108,9 +108,19 @@ function EventListPage() {
         <button type="submit">Search</button>
       </form>
 
-      {status === 'loading' && <p>Loading events…</p>}
+      {status === 'loading' && (
+        <div className="grid">
+          {Array.from({ length: 3 }, (_, i) => (
+            <div key={i} className="card skeleton skeleton-card" />
+          ))}
+        </div>
+      )}
       {status === 'error' && <p className="error">Couldn't load events. Is the backend running?</p>}
-      {status === 'success' && events.length === 0 && <p>No events found.</p>}
+      {status === 'success' && events.length === 0 && (
+        <div className="empty-state">
+          <p>No events found.</p>
+        </div>
+      )}
       {status === 'success' && events.length > 0 && (
         <>
           <div className="grid">
@@ -120,9 +130,9 @@ function EventListPage() {
           </div>
           {totalPages > 1 && (
             <div className="pagination">
-              <button disabled={page === 0} onClick={() => handlePageChange(page - 1)}>← Previous</button>
-              <span>Page {page + 1} of {totalPages}</span>
-              <button disabled={page >= totalPages - 1} onClick={() => handlePageChange(page + 1)}>Next →</button>
+              <button disabled={page === 0} onClick={() => handlePageChange(page - 1)}>Previous</button>
+              <span>{page + 1} / {totalPages}</span>
+              <button disabled={page >= totalPages - 1} onClick={() => handlePageChange(page + 1)}>Next</button>
             </div>
           )}
         </>

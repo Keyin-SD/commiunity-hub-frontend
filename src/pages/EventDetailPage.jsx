@@ -25,21 +25,28 @@ function EventDetailPage() {
     }
   }, [eventId])
 
-  if (status === 'loading') return <p>Loading event…</p>
+  if (status === 'loading') {
+    return (
+      <div className="detail">
+        <div className="skeleton skeleton-detail" style={{ width: '100%' }} />
+      </div>
+    )
+  }
+
   if (status === 'error') {
     return (
-      <>
+      <div className="detail">
         <p className="error">Couldn't find that event.</p>
-        <Link to="/events">← Back to events</Link>
-      </>
+        <Link to="/events" className="back-link">Back to events</Link>
+      </div>
     )
   }
 
   return (
     <article className="detail">
       <div className="detail-actions">
-        <Link to="/events">← Back to events</Link>
-        <Link to={`/events/${eventId}/edit`} className="button">Edit</Link>
+        <Link to="/events" className="back-link">Back to events</Link>
+        <Link to={`/events/${eventId}/edit`} className="button button-outline">Edit</Link>
       </div>
       {event.resourceCategory && <span className="tag">{event.resourceCategory}</span>}
       <h1>{event.resourceTitle}</h1>
