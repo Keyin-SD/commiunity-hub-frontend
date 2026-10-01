@@ -9,7 +9,12 @@ function EventCard({ event }) {
         <Link to={`/events/${event.resourceId}`}>{event.resourceTitle}</Link>
       </h2>
       <p className="meta">
-        {[formatTime(event.resourceTime), event.location?.locationName ?? event.resourceLocation].filter(Boolean).join(' · ')}
+        {formatTime(event.resourceTime)}
+        {formatTime(event.resourceTime) && (event.location?.locationName || event.resourceLocation) && ' · '}
+        {event.location?.locationName ?? event.resourceLocation}
+        {event.location?.city && (
+          <>{event.location.locationName ? ', ' : ''}<Link to={`/cities/${event.location.city.cityId}`}>{event.location.city.cityName}</Link></>
+        )}
       </p>
       <p className="price">{formatPrice(event.resourcePrice)}</p>
     </article>

@@ -55,9 +55,14 @@ function EventDetailPage() {
           <>
             <dt>Where</dt>
             <dd>
-              {event.location
-                ? [event.location.locationName, event.location.locationAddress, event.location.locationCity].filter(Boolean).join(', ')
-                : event.resourceLocation}
+              {event.location ? (
+                <>
+                  {[event.location.locationName, event.location.locationAddress].filter(Boolean).join(', ')}
+                  {event.location.city && (
+                    <>{(event.location.locationName || event.location.locationAddress) && ', '}<Link to={`/cities/${event.location.city.cityId}`}>{event.location.city.cityName}</Link></>
+                  )}
+                </>
+              ) : event.resourceLocation}
             </dd>
           </>
         )}

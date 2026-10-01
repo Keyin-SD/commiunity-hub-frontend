@@ -190,6 +190,29 @@ main {
   color: #c62828;
 }
 
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.search-bar select,
+.search-bar input {
+  padding: 0.5rem;
+  border: 1px solid #c9ced4;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.search-bar input {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-bar select {
+  flex-shrink: 0;
+}
+
 .button-outline {
   background: transparent;
   color: #2458d6;
@@ -240,5 +263,18 @@ main {
 
 .feature-card p {
   margin: 0;
+  color: #59636e;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.pagination span {
+  font-size: 0.9rem;
   color: #59636e;
 }

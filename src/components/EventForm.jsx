@@ -31,7 +31,7 @@ function toFormValues(event) {
     resourceTime: isIsoTime(event.resourceTime) ? toLocalInput(event.resourceTime) : '',
     locationName: event.location?.locationName ?? event.resourceLocation ?? '',
     locationAddress: event.location?.locationAddress ?? '',
-    locationCity: event.location?.locationCity ?? '',
+    locationCity: event.location?.city?.cityName ?? '',
     resourcePrice: event.resourcePrice ?? '',
     contactName: event.contactName ?? '',
     contactEmail: event.contactEmail ?? '',
@@ -54,7 +54,7 @@ function toPayload(form, legacyTime) {
     location: {
       locationName: form.locationName,
       locationAddress: form.locationAddress,
-      locationCity: form.locationCity,
+      city: { cityName: form.locationCity },
     },
   }
 }

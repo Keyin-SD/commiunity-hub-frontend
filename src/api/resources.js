@@ -1,4 +1,6 @@
-const BASE_URL = '/api/resources'
+import { API_BASE } from './config.js'
+
+const BASE_URL = `${API_BASE}/api/resources`
 
 async function request(path, options) {
   const response = await fetch(`${BASE_URL}/${path}`, options)
@@ -8,8 +10,8 @@ async function request(path, options) {
   return response.json()
 }
 
-export function getAllResources() {
-  return request('allResources')
+export function getAllResources(page = 0, size = 10, sortBy = 'resourceId') {
+  return request(`allResources?page=${page}&size=${size}&sortBy=${encodeURIComponent(sortBy)}`)
 }
 
 export function getResourceById(resourceId) {
@@ -26,6 +28,26 @@ export async function createResource(resource) {
   if (!response.ok) {
     throw new Error(`Request failed with status ${response.status}`)
   }
+}
+
+export function searchByTitle(title) {
+  return request(`searchByTitle/${encodeURIComponent(title)}`)
+}
+
+export function searchByCategory(category) {
+  return request(`searchByCategory/${encodeURIComponent(category)}`)
+}
+
+export function searchByContactName(contactName) {
+  return request(`searchByContactName/${encodeURIComponent(contactName)}`)
+}
+
+export function searchByLocation(location) {
+  return request(`searchByLocation/${encodeURIComponent(location)}`)
+}
+
+export function searchByCity(city) {
+  return request(`searchByCity/${encodeURIComponent(city)}`)
 }
 
 export function updateResource(resourceId, resource) {
