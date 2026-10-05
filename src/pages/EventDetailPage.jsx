@@ -111,27 +111,18 @@ function EventDetailPage() {
         </>
       )}
 
-      <h2>Contact</h2>
-      <ul className="contact">
-        {event.contactName && <li>{event.contactName}</li>}
-        {event.contactEmail && (
-          <li>
-            <a href={`mailto:${event.contactEmail}`}>{event.contactEmail}</a>
-          </li>
-        )}
-        {event.contactPhone && (
-          <li>
-            <a href={`tel:${event.contactPhone}`}>{event.contactPhone}</a>
-          </li>
-        )}
-        {isWebUrl(event.contactWebsiteUrl) && (
-          <li>
-            <a href={event.contactWebsiteUrl} target="_blank" rel="noreferrer">
-              {event.contactWebsiteUrl}
-            </a>
-          </li>
-        )}
-      </ul>
+      {isWebUrl(event.contactWebsiteUrl) && (
+        <>
+          <h2>Contact</h2>
+          <ul className="contact">
+            <li>
+              <a href={event.contactWebsiteUrl} target="_blank" rel="noreferrer">
+                {event.contactWebsiteUrl}
+              </a>
+            </li>
+          </ul>
+        </>
+      )}
     </article>
   )
 }

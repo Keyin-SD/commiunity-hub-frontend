@@ -10,10 +10,8 @@ const EMPTY_FORM = {
   locationAddress: '',
   locationCity: '',
   resourcePrice: '',
-  contactName: '',
-  contactEmail: '',
-  contactPhone: '',
   contactWebsiteUrl: '',
+  postedByUserId: '',
 }
 
 function toLocalInput(isoTime) {
@@ -33,10 +31,8 @@ function toFormValues(event) {
     locationAddress: event.location?.locationAddress ?? '',
     locationCity: event.location?.city?.cityName ?? '',
     resourcePrice: event.resourcePrice ?? '',
-    contactName: event.contactName ?? '',
-    contactEmail: event.contactEmail ?? '',
-    contactPhone: event.contactPhone ?? '',
     contactWebsiteUrl: event.contactWebsiteUrl ?? '',
+    postedByUserId: event.postedBy?.userId ?? '',
   }
 }
 
@@ -47,10 +43,8 @@ function toPayload(form, legacyTime) {
     resourceCategory: form.resourceCategory,
     resourceTime: form.resourceTime ? new Date(form.resourceTime).toISOString() : (legacyTime ?? ''),
     resourcePrice: form.resourcePrice === '' ? 0 : Number(form.resourcePrice),
-    contactName: form.contactName,
-    contactEmail: form.contactEmail,
-    contactPhone: form.contactPhone,
     contactWebsiteUrl: form.contactWebsiteUrl,
+    postedBy: form.postedByUserId ? { userId: Number(form.postedByUserId) } : null,
     location: {
       locationName: form.locationName,
       locationAddress: form.locationAddress,
@@ -132,20 +126,16 @@ function EventForm({ initialEvent, submitLabel, onSubmit }) {
       <fieldset>
         <legend>Contact</legend>
         <label>
-          Name
-          <input name="contactName" value={form.contactName} onChange={handleChange} />
-        </label>
-        <label>
-          Email
-          <input type="email" name="contactEmail" value={form.contactEmail} onChange={handleChange} />
-        </label>
-        <label>
-          Phone
-          <input type="tel" name="contactPhone" value={form.contactPhone} onChange={handleChange} />
-        </label>
-        <label>
           Website
           <input type="url" name="contactWebsiteUrl" value={form.contactWebsiteUrl} onChange={handleChange} placeholder="https://" />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Posted by</legend>
+        <label>
+          User ID
+          <input type="number" name="postedByUserId" value={form.postedByUserId} onChange={handleChange} min="1" placeholder="Enter user ID" />
         </label>
       </fieldset>
 
