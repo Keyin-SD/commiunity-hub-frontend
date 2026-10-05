@@ -5,6 +5,7 @@ import EventDetailPage from './pages/EventDetailPage.jsx'
 import AddEventPage from './pages/AddEventPage.jsx'
 import EditEventPage from './pages/EditEventPage.jsx'
 import CityDetailPage from './pages/CityDetailPage.jsx'
+import UserDetailPage from './pages/UserDetailPage.jsx'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/events/:eventId" element={<EventDetailPage />} />
           <Route path="/events/:eventId/edit" element={<EditEventPage />} />
           <Route path="/cities/:cityId" element={<CityDetailPage />} />
+          <Route path="/users/:userId" element={<UserDetailPage />} />
           <Route path="*" element={<p>Page not found.</p>} />
         </Routes>
       </main>

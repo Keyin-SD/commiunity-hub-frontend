@@ -17,6 +17,9 @@ function EventCard({ event }) {
         )}
       </p>
       <p className="price">{formatPrice(event.resourcePrice)}</p>
+      {event.postedBy?.userName && (
+        <p className="posted-by">Posted by <Link to={`/users/${event.postedBy.userId}`}>{event.postedBy.userName}</Link></p>
+      )}
     </article>
   )
 }

@@ -1,29 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
-import {
-  getAllResources,
-  searchByTitle,
-  searchByCategory,
-  searchByContactName,
-  searchByLocation,
-  searchByCity,
-} from '../api/resources.js'
+import { useEffect, useState } from 'react'
+import { getAllResources, search } from '../api/resources.js'
 import EventCard from '../components/EventCard.jsx'
-
-const SEARCH_FIELDS = [
-  { value: 'title', label: 'Title' },
-  { value: 'category', label: 'Category' },
-  { value: 'contact', label: 'Contact name' },
-  { value: 'location', label: 'Location' },
-  { value: 'city', label: 'City' },
-]
-
-const searchFns = {
-  title: searchByTitle,
-  category: searchByCategory,
-  contact: searchByContactName,
-  location: searchByLocation,
-  city: searchByCity,
-}
 
 const PAGE_SIZE = 10
 
@@ -31,16 +8,15 @@ function EventListPage() {
   const [events, setEvents] = useState([])
   const [status, setStatus] = useState('loading')
   const [query, setQuery] = useState('')
-  const [field, setField] = useState('title')
+  const [activeQuery, setActiveQuery] = useState('')
   const [page, setPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
-  const debounceRef = useRef(null)
 
-  function load(searchField, searchQuery, pageNum = 0) {
+  function load(searchQuery, pageNum = 0) {
     setStatus('loading')
     const isSearch = searchQuery.trim()
     const promise = isSearch
-      ? searchFns[searchField](searchQuery.trim())
+      ? search(searchQuery.trim())
       : getAllResources(pageNum, PAGE_SIZE)
 
     promise
@@ -60,33 +36,17 @@ function EventListPage() {
   }
 
   useEffect(() => {
-    load(field, query, 0)
+    load('', 0)
   }, [])
-
-  function handleQueryChange(e) {
-    const value = e.target.value
-    setQuery(value)
-    clearTimeout(debounceRef.current)
-    debounceRef.current = setTimeout(() => load(field, value, 0), 400)
-  }
-
-  function handleFieldChange(e) {
-    const newField = e.target.value
-    setField(newField)
-    if (query.trim()) {
-      clearTimeout(debounceRef.current)
-      load(newField, query, 0)
-    }
-  }
 
   function handleSubmit(e) {
     e.preventDefault()
-    clearTimeout(debounceRef.current)
-    load(field, query, 0)
+    setActiveQuery(query)
+    load(query, 0)
   }
 
   function handlePageChange(newPage) {
-    load(field, query, newPage)
+    load(activeQuery, newPage)
   }
 
   return (
@@ -94,16 +54,11 @@ function EventListPage() {
       <h1>Events</h1>
 
       <form className="search-bar" onSubmit={handleSubmit}>
-        <select value={field} onChange={handleFieldChange}>
-          {SEARCH_FIELDS.map((f) => (
-            <option key={f.value} value={f.value}>{f.label}</option>
-          ))}
-        </select>
         <input
           type="search"
-          placeholder={`Search by ${SEARCH_FIELDS.find((f) => f.value === field).label.toLowerCase()}…`}
+          placeholder="Search events…"
           value={query}
-          onChange={handleQueryChange}
+          onChange={(e) => setQuery(e.target.value)}
         />
         <button type="submit">Search</button>
       </form>

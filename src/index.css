@@ -231,6 +231,42 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
+.posted-by {
+  margin: 0.5rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.user-profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.user-profile-header h1 {
+  margin: 0;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.user-avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font-size: 2rem;
+  font-weight: 600;
+}
+
 .tag {
   display: inline-block;
   padding: 0.125rem 0.5rem;

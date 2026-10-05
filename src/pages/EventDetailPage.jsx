@@ -79,6 +79,38 @@ function EventDetailPage() {
 
       {event.resourceDescription && <p>{event.resourceDescription}</p>}
 
+      {event.postedBy && (
+        <>
+          <h2>Posted by</h2>
+          <dl>
+            {event.postedBy.userName && (
+              <>
+                <dt>Name</dt>
+                <dd><Link to={`/users/${event.postedBy.userId}`}>{event.postedBy.userName}</Link></dd>
+              </>
+            )}
+            {event.postedBy.userEmail && (
+              <>
+                <dt>Email</dt>
+                <dd><a href={`mailto:${event.postedBy.userEmail}`}>{event.postedBy.userEmail}</a></dd>
+              </>
+            )}
+            {event.postedBy.userPhone && (
+              <>
+                <dt>Phone</dt>
+                <dd><a href={`tel:${event.postedBy.userPhone}`}>{event.postedBy.userPhone}</a></dd>
+              </>
+            )}
+            {event.postedBy.userAddress && (
+              <>
+                <dt>Address</dt>
+                <dd>{event.postedBy.userAddress}</dd>
+              </>
+            )}
+          </dl>
+        </>
+      )}
+
       <h2>Contact</h2>
       <ul className="contact">
         {event.contactName && <li>{event.contactName}</li>}

@@ -30,24 +30,8 @@ export async function createResource(resource) {
   }
 }
 
-export function searchByTitle(title) {
-  return request(`searchByTitle/${encodeURIComponent(title)}`)
-}
-
-export function searchByCategory(category) {
-  return request(`searchByCategory/${encodeURIComponent(category)}`)
-}
-
-export function searchByContactName(contactName) {
-  return request(`searchByContactName/${encodeURIComponent(contactName)}`)
-}
-
-export function searchByLocation(location) {
-  return request(`searchByLocation/${encodeURIComponent(location)}`)
-}
-
-export function searchByCity(city) {
-  return request(`searchByCity/${encodeURIComponent(city)}`)
+export function search(query) {
+  return request(`search?q=${encodeURIComponent(query)}`)
 }
 
 export function updateResource(resourceId, resource) {
