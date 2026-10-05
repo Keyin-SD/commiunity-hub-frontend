@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { isIsoTime } from '../utils/format.js'
+import { useAuth } from '../AuthContext.jsx'
 
 const EMPTY_FORM = {
   resourceTitle: '',
@@ -36,7 +37,7 @@ function toFormValues(event) {
   }
 }
 
-function toPayload(form, legacyTime) {
+function toPayload(form, legacyTime, authUser) {
   return {
     resourceTitle: form.resourceTitle,
     resourceDescription: form.resourceDescription,
@@ -44,7 +45,7 @@ function toPayload(form, legacyTime) {
     resourceTime: form.resourceTime ? new Date(form.resourceTime).toISOString() : (legacyTime ?? ''),
     resourcePrice: form.resourcePrice === '' ? 0 : Number(form.resourcePrice),
     contactWebsiteUrl: form.contactWebsiteUrl,
-    postedBy: form.postedByUserId ? { userId: Number(form.postedByUserId) } : null,
+    postedBy: form.postedByUserId ? { userId: Number(form.postedByUserId) } : (authUser ? { userId: authUser.userId } : null),
     location: {
       locationName: form.locationName,
       locationAddress: form.locationAddress,
@@ -54,6 +55,7 @@ function toPayload(form, legacyTime) {
 }
 
 function EventForm({ initialEvent, submitLabel, onSubmit }) {
+  const { user: authUser } = useAuth()
   const [form, setForm] = useState(() => toFormValues(initialEvent))
   const [status, setStatus] = useState('idle')
 
@@ -68,7 +70,7 @@ function EventForm({ initialEvent, submitLabel, onSubmit }) {
     e.preventDefault()
     setStatus('submitting')
     try {
-      await onSubmit(toPayload(form, legacyTime))
+      await onSubmit(toPayload(form, legacyTime, authUser))
     } catch {
       setStatus('error')
     }
@@ -128,14 +130,6 @@ function EventForm({ initialEvent, submitLabel, onSubmit }) {
         <label>
           Website
           <input type="url" name="contactWebsiteUrl" value={form.contactWebsiteUrl} onChange={handleChange} placeholder="https://" />
-        </label>
-      </fieldset>
-
-      <fieldset>
-        <legend>Posted by</legend>
-        <label>
-          User ID
-          <input type="number" name="postedByUserId" value={form.postedByUserId} onChange={handleChange} min="1" placeholder="Enter user ID" />
         </label>
       </fieldset>
 

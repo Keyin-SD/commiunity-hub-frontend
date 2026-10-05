@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getCityById } from '../api/cities.js'
 
+const UNSPLASH_KEY = import.meta.env.VITE_UNSPLASH_KEY
+
 function CityDetailPage() {
   const { cityId } = useParams()
   const [city, setCity] = useState(null)
+  const [photo, setPhoto] = useState(null)
   const [status, setStatus] = useState('loading')
 
   useEffect(() => {
@@ -15,6 +18,16 @@ function CityDetailPage() {
         if (ignore) return
         setCity(data)
         setStatus('success')
+        if (UNSPLASH_KEY && data.cityName) {
+          fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(data.cityName + ' city')}&per_page=1&orientation=landscape`, {
+            headers: { Authorization: `Client-ID ${UNSPLASH_KEY}` },
+          })
+            .then((r) => r.json())
+            .then((json) => {
+              if (!ignore && json.results?.[0]) setPhoto(json.results[0])
+            })
+            .catch(() => {})
+        }
       })
       .catch(() => {
         if (!ignore) setStatus('error')
@@ -44,6 +57,24 @@ function CityDetailPage() {
   return (
     <article className="detail">
       <Link to="/events" className="back-link">Back to events</Link>
+      {photo && (
+        <div className="city-photo">
+          <img
+            src={photo.urls.regular}
+            alt={photo.alt_description || city.cityName}
+          />
+          <p className="city-photo-credit">
+            Photo by{' '}
+            <a href={`${photo.user.links.html}?utm_source=community_hub&utm_medium=referral`} target="_blank" rel="noreferrer">
+              {photo.user.name}
+            </a>
+            {' '}on{' '}
+            <a href="https://unsplash.com/?utm_source=community_hub&utm_medium=referral" target="_blank" rel="noreferrer">
+              Unsplash
+            </a>
+          </p>
+        </div>
+      )}
       <h1>{city.cityName}</h1>
 
       <div className="city-stats">
